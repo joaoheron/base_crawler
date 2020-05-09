@@ -1,4 +1,4 @@
 *.vscode
 *pycache*
-*venv
+/venv
 *pycache*
