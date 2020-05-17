@@ -2,6 +2,7 @@ import time
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from model import Action
 from conf import actions_list
 import vars
 
@@ -25,12 +26,16 @@ def build_chrome_options(headless=True):
     })
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--disable-software-rasterizer')
-    chrome_options.add_argument('--headless=' + str(headless))
+    # chrome_options.add_argument('--headless=' + str(headless))
 
     return chrome_options
 
 def build_firefox_options():
     print('Loading...')
+
+def extract(browser, timeout):
+    driver = build_driver(browser, timeout)
+    navigate(driver)
 
 def build_driver(browser='chrome', timeout=30):
     print('Starting Crawler...')
@@ -40,7 +45,11 @@ def build_driver(browser='chrome', timeout=30):
         # initialize webdriver
         driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=vars.chromedriver_path)
         # set download folder
-        enable_download_headless(driver, download_dir)
+        enable_download_headless(driver, vars.download_dir)
+        # maximize window
+        driver.maximize_window()
+
+        return driver
     elif 'firefox' in browser or 'gecko' in browser:
         print('Gecko Driver is no available yet.')
         
@@ -58,27 +67,37 @@ def download_file(url, download_dir=vars.download_dir, filename=vars.filename, f
     driver.quit
 
 def navigate(driver):
+    """ 
+    function navigate()
+
+    This function navigates through websites.
+
+    Attributes: - driver
+    """
     for action in actions_list:
+        # Navigation and download actions
+        if 'navigation' in action.action_type.lower() or 'download' in action.action_type.lower():
+            driver.get(action.action_target)
         # Click actions
-        if 'click' in action.action_type.lower():
+        elif 'click' in action.action_type.lower():
             if 'id' in action.action_selector_kind.lower():
                 driver.find_element_by_id(action.action_target).click()
             elif 'name' in action.action_selector_kind.lower():
                 driver.find_element_by_name(action.action_target).click()
             elif 'xpath' in action.action_selector_kind.lower():
                 driver.find_element_by_xpath(action.action_target).click()
-            elif 'link_text' in action.action_selector_kind.lower():
-                driver.find_element_by_link_text(action.action_target).click()
             elif 'partial_link_text' in action.action_selector_kind.lower():
                 driver.find_element_by_partial_link_text(action.action_target).click()
+            elif 'link_text' in action.action_selector_kind.lower():
+                driver.find_element_by_link_text(action.action_target).click()
             elif 'tag_name' in action.action_selector_kind.lower():
                 driver.find_element_by_tag_name(action.action_target).click()
             elif 'class_name' in action.action_selector_kind.lower():
-                driver.find_element_class_name(action.action_target).click()
-            elif 'css_selector' in action.action_selector_kind.lower():
-                driver.find_element_css_selector(action.action_target).click()
+                driver.find_element_by_class_name(action.action_target).click()
+            elif 'selector' in action.action_selector_kind.lower():
+                driver.find_element_by_css_selector(action.action_target).click()
         # Type actions
-        elif action.action_type == 'type':
+        elif 'type' in action.action_type:
             #  id, name, xpath, link_text, partial_link_text, tag_name, class_name, css_selector
             if 'id' in action.action_selector_kind.lower():
                 driver.find_element_by_id(action.action_target).send_keys(action.type_text)
@@ -86,21 +105,19 @@ def navigate(driver):
                 driver.find_element_by_name(action.action_target).send_keys(action.type_text)
             elif 'xpath' in action.action_selector_kind.lower():
                 driver.find_element_by_xpath(action.action_target).send_keys(action.type_text)
-            elif 'link_text' in action.action_selector_kind.lower():
-                driver.find_element_by_link_text(action.action_target).send_keys(action.type_text)
             elif 'partial_link_text' in action.action_selector_kind.lower():
                 driver.find_element_by_partial_link_text(action.action_target).send_keys(action.type_text)
+            elif 'link_text' in action.action_selector_kind.lower():
+                driver.find_element_by_link_text(action.action_target).send_keys(action.type_text)
             elif 'tag_name' in action.action_selector_kind.lower():
                 driver.find_element_by_tag_name(action.action_target).send_keys(action.type_text)
             elif 'class_name' in action.action_selector_kind.lower():
-                driver.find_element_class_name(action.action_target).send_keys(action.type_text)
-            elif 'css_selector' in action.action_selector_kind.lower():
-                driver.find_element_css_selector(action.action_target).send_keys(action.type_text)
+                driver.find_element_by_class_name(action.action_target).send_keys(action.type_text)
+            elif 'selector' in action.action_selector_kind.lower():
+                driver.find_element_by_css_selector(action.action_target).send_keys(action.type_text)
         # Hover actions
-        elif action.action_type == 'hover':
+        elif 'hover' in action.action_type:
             print('hovered')
         # Drag and drop actions
-        elif action.action_type == 'drag_and_drop':
+        elif 'drag_and_drop' in action.action_type:
             print('drag and dropped')
-
-

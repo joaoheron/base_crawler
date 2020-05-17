@@ -56,7 +56,8 @@ class Action():
     type_text = None
     timeout = None
 
-    def __init__(self, action_type='click', action_target='id_do_elemento', action_selector_kind='id', wait_for='elemento_a_esperar', wait_for_kind='id', type_text='abcdef', timeout=30):
+    def __init__(self, action_type='click', action_target='id_do_elemento', action_selector_kind=None, wait_for=None, wait_for_kind=None, type_text=None, timeout=30):
+        # action_type='click', action_target='id_do_elemento', action_selector_kind='id', wait_for='elemento_a_esperar', wait_for_kind='id', type_text='abcdef', timeout=30)
         self.action_type = action_type
         self.action_target = action_target
         self.action_selector_kind = action_selector_kind
