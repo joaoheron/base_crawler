@@ -1,6 +1,6 @@
 import sys
-import extractor
-import vars
+import src.extractor as extractor
+import src.vars as vars
 import time
 
 if len(sys.argv) < 2:

@@ -1,4 +1,4 @@
-import vars
+import src.vars as vars
 
 # Base Extractor
 class BaseExtractor():

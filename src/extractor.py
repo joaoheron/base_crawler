@@ -2,9 +2,9 @@ import time
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from model import Action
-from conf import actions_list
-import vars
+from src.model import Action
+from src.conf import actions_list
+import src.vars as vars
 
 def enable_download_headless(browser, download_dir):
     browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')

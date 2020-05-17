@@ -1,4 +1,4 @@
-from model import Action
+from src.model import Action
 
 # Extractor actions list
 # each Action object inside actions_list must contain: 'action_type', 'action_target' and 'action_selector_kind'. Other parameters are optional.
