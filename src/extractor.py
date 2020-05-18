@@ -1,6 +1,7 @@
 import time
 import os
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
 from src.model import Action
 from src.conf import actions_list
@@ -62,7 +63,7 @@ def extract(browser, timeout):
 
     Attributes: 
         - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
-        - timeout: Amount of seconds the Selenium webdriver will use as it's timeout.
+        - timeout: Amount of seconds the Selenium webdriver will use as it's own timeout.
     """
     driver = build_driver(browser, timeout)
     navigate(driver)
@@ -74,7 +75,7 @@ def build_driver(browser='chrome', timeout=30):
 
     Attributes: 
         - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
-        - timeout: Amount of seconds the Selenium webdriver will use as it's timeout.
+        - timeout: Amount of seconds the Selenium webdriver will use as it's own timeout.
     """
     print('Building Driver...')
     if 'chrome' in browser.lower() or 'google' in browser.lower():
@@ -176,7 +177,24 @@ def navigate(driver):
                 driver.find_element_by_css_selector(action.action_target).send_keys(action.type_text)
         # Hover actions
         elif 'hover' in action.action_type:
-            print('hovered')
+            action = ActionChains(driver)
+            if 'id' in action.action_selector_kind.lower():
+                parent_level_menu = driver.find_element_by_id(action.action_target)
+            elif 'name' in action.action_selector_kind.lower():
+                parent_level_menu = driver.find_element_by_name(action.action_target)
+            elif 'xpath' in action.action_selector_kind.lower():
+                parent_level_menu = driver.find_element_by_xpath(action.action_target)
+            elif 'partial_link_text' in action.action_selector_kind.lower():
+                parent_level_menu = driver.find_element_by_partial_link_text(action.action_target)
+            elif 'link_text' in action.action_selector_kind.lower():
+                parent_level_menu = driver.find_element_by_link_text(action.action_target)
+            elif 'tag_name' in action.action_selector_kind.lower():
+                parent_level_menu = driver.find_element_by_tag_name(action.action_target)
+            elif 'class_name' in action.action_selector_kind.lower():
+                parent_level_menu = driver.find_element_by_class_name(action.action_target)
+            elif 'selector' in action.action_selector_kind.lower():
+                parent_level_menu = driver.find_element_by_css_selector(action.action_target)
+            action.move_to_element(parent_level_menu).perform()
         # Drag and drop actions
         elif 'drag_and_drop' in action.action_type:
             print('drag and dropped')

@@ -56,7 +56,7 @@ Action(action_type, action_target, action_selector_kind, wait_for, wait_for_kind
         Keys is a paremeter which stores input keys for the Action. It can be with send_keys action type.
 
     timeout:
-        Timeout is the amount of seconds the Selenium webdriver will use as it's timeout.
+        Timeout is the amount of seconds the Selenium webdriver will use as it's own timeout.
 """
 # Action(action_type, action_target, action_selector_kind, wait_for, wait_for_kind, keys, timeout)
 
