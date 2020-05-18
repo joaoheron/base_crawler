@@ -7,40 +7,40 @@ Action is a object defined in the class model.py
 Action(action_type, action_target, action_selector_kind, wait_for, wait_for_kind, keys, timeout)
 
     action_type:   
-        - goback:
-        - gofront:
-        - navigation:
+        - goback: Clicks on the browser's GoBack action (Navigates to the previous link).
+        - gofoward: Clicks on the browser's GoFoward action (Navigates to the next link).
+        - navigation: Navigates to the action_target value.
                 - Allowed action_target: Any url.
-        - download: 
+        - download: Enables Webdriver download and navigates to the action_target value.
                 - Allowed action_target:  Any url.
-        - click:
+        - click: Clicks on the WebElement. The WebElement is finded by action_target and action_selector_kind.
                 - Allowed action_target: : Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
                 - Allowed action_selector_kind: "id", "name", "xpath", "link_text", "partial_link_text", "tag_name", "class_name" or "css_selector"
-        - send_keys:
+        - send_keys: Send keys(types) on the WebElement. The WebElement is finded by action_target and action_selector_kind.
                 - Allowed action_target: : Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
                 - Allowed action_selector_kind: "id", "name", "xpath", "link_text", "partial_link_text", "tag_name", "class_name" or "css_selector"
-        - hover:
+        - hover: Hover over WebElement. The WebElement is finded by action_target and action_selector_kind.
                 - Allowed action_target: : Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
                 - Allowed action_selector_kind: "id", "name", "xpath", "link_text", "partial_link_text", "tag_name", "class_name" or "css_selector"
-        - drag_and_drop:
+        - drag_and_drop:Drag and drops WebElement. The WebElement is finded by action_target and action_selector_kind.
                 - Allowed action_target: : Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
                 - Allowed action_selector_kind: "id", "name", "xpath", "link_text", "partial_link_text", "tag_name", "class_name" or "css_selector"
 
     action_target: 
-        Action targets can be any url, element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
+        action_target can be any url, element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
 
     action_selector_kind:
-        - id: Element's id.
-        - name: Element's name.
-        - xpath: Element's xpath.
-        - link_text: Element's link text.
-        - partial_link_text: Element's partial link text.
-        - tag_name: Element's tag name.
-        - class_name: Element's class name.
-        - css_selector: Element's css selector.
+        - id: WebElement's id.
+        - name: WebElement's name.
+        - xpath: WebElement's xpath.
+        - link_text: WebElement's link text.
+        - partial_link_text: WebElement's partial link text.
+        - tag_name: WebElement's tag name.
+        - class_name: WebElement's class name.
+        - css_selector: WebElement's css selector.
 
     wait_for: 
-        "Wait for" can be any element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
+        wait_for can be any element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
 
     wait_for_kind:
         - id: Element's id.
