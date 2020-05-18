@@ -13,7 +13,7 @@ def enable_download_headless(browser, download_dir):
         This function enables that a webdriver download files even if it's a headless webdriver.
 
     Attributes: 
-        - driver: Selenium web driver.
+        - browser: Selenium web driver.
         - download_dir: Folder to store the downloads.
     """
     browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
