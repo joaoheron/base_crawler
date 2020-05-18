@@ -125,8 +125,8 @@ def navigate(driver):
         # Goback Action
         elif 'goback' in action.action_type.lower():
             driver.execute_script("window.history.go(-1)")
-        # Gofront
-        elif 'gofront' in action.action_type.lower():
+        # Goforward Action
+        elif 'goforward' in action.action_type.lower():
             driver.execute_script("window.history.go(+1)")
         # Implicit Wait Action
         elif 'wait' in action.action_type.lower():
