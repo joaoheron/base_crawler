@@ -10,7 +10,7 @@ elif len(sys.argv) < 5:
     try:
         extractor.extract(sys.argv[1], sys.argv[2])
     except:
-        print('Error during download.')
+        print('Error during navigation.')
         sys.exit(1)
 else:
     print('Unsupported args.')

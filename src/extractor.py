@@ -7,11 +7,26 @@ from src.conf import actions_list
 import src.vars as vars
 
 def enable_download_headless(browser, download_dir):
+    """ 
+    function enable_download_headless()
+        This function enables that a webdriver download files even if it's a headless webdriver.
+
+    Attributes: 
+        - driver: Selenium web driver.
+        - download_dir: Folder to store the downloads.
+    """
     browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
     params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_dir}}
     browser.execute("send_command", params)
 
 def build_chrome_options(headless=True):
+    """ 
+    function build_chrome_options()
+        This function builds options for Chrome Driver.
+
+    Attributes: 
+        - headless: Indicates if the driver will be headless (hidden).
+    """
     chrome_options = Options()
     chrome_options.add_argument("--window-size=1920x1080")
     chrome_options.add_argument("--disable-notifications")
@@ -31,53 +46,98 @@ def build_chrome_options(headless=True):
     return chrome_options
 
 def build_firefox_options():
-    print('Loading...')
+    """ 
+    function build_firefox_options()
+        This function builds options for Gecko Driver.
+
+    Attributes: 
+            - headless: Indicates if the driver will be headless (hidden).
+    """
+    print('build options for Gecko Driver is not available yet.')
 
 def extract(browser, timeout):
+    """ 
+    function extract()
+        This function builds a selenium webdriver and navigates through websites.
+
+    Attributes: 
+        - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
+        - timeout: Amount of seconds the Selenium webdriver will use as it's timeout.
+    """
     driver = build_driver(browser, timeout)
     navigate(driver)
 
 def build_driver(browser='chrome', timeout=30):
-    print('Starting Crawler...')
-    if 'chrome' in browser:
+    """ 
+    function build_driver()
+        This function builds a selenium webdriver.
+
+    Attributes: 
+        - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
+        - timeout: Amount of seconds the Selenium webdriver will use as it's timeout.
+    """
+    print('Building Driver...')
+    if 'chrome' in browser.lower() or 'google' in browser.lower():
         # build options
         chrome_options = build_chrome_options()
         # initialize webdriver
         driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=vars.chromedriver_path)
-        # set download folder
-        enable_download_headless(driver, vars.download_dir)
         # maximize window
         driver.maximize_window()
 
         return driver
-    elif 'firefox' in browser or 'gecko' in browser:
-        print('Gecko Driver is no available yet.')
+    elif 'firefox' in browser.lower() or 'gecko' in browser.lower() or 'mozilla' in browser.lower():
+        print('Gecko Driver is not available yet.')
         
-def download_file(url, download_dir=vars.download_dir, filename=vars.filename, fileformat=None, sq=True):
-    # navigate to url and downloads spreadsheet
-    driver.get(url)
-    print('Download of the file has began.')
-    if sq:
-        if os.path.exists(download_dir + filename):
-            os.remove(download_dir + filename)
-        driver.save_screenshot(download_dir + filename)
-    time.sleep(int(timeout))
-    print('Download of the file has been finished.')
-    driver.close
-    driver.quit
+def screenshot(driver, download_dir=vars.download_dir, filename=vars.filename, fileformat=None):
+    """ 
+    function screenshot()
+        This function takes a Screenshot from the screen.
+
+    Attributes: 
+        - driver: Selenium web driver.
+        - download_dir: Folder to store screenshot file.
+        - filename: Screenshot's file name.
+        - fileformat: Screenshot's file format.
+    """
+    if os.path.exists(download_dir + filename):
+        os.remove(download_dir + filename)
+    driver.save_screenshot(download_dir + filename)
+    print('Screenshoted screen and saved file at ' + str(download_dir))
 
 def navigate(driver):
     """ 
     function navigate()
+        This function navigates through websites executing every Action inside actions_list (from conf.py file).
 
-    This function navigates through websites.
-
-    Attributes: - driver
+    Attributes: 
+        - driver: Selenium web driver.
     """
     for action in actions_list:
-        # Navigation and download actions
-        if 'navigation' in action.action_type.lower() or 'download' in action.action_type.lower():
+        # Navigation Action
+        if 'navigation' in action.action_type.lower() or 'navigate' in action.action_type.lower():
             driver.get(action.action_target)
+        # Download Action
+        elif 'download' in action.action_type.lower():
+            enable_download_headless(driver, vars.download_dir)
+            driver.get(action.action_target)
+        # Goback Action
+        elif 'goback' in action.action_type.lower():
+            driver.execute_script("window.history.go(-1)")
+        # Gofront
+        elif 'gofront' in action.action_type.lower():
+            driver.execute_script("window.history.go(+1)")
+        # Implicit Wait Action
+        elif 'wait' in action.action_type.lower():
+            driver.implicitly_wait(float(action.keys))
+        # New Window Action
+
+        # New Tab Action
+
+        # Switch Window Action
+
+        # Switch Tab Action
+
         # Click actions
         elif 'click' in action.action_type.lower():
             if 'id' in action.action_selector_kind.lower():
@@ -97,8 +157,7 @@ def navigate(driver):
             elif 'selector' in action.action_selector_kind.lower():
                 driver.find_element_by_css_selector(action.action_target).click()
         # Type actions
-        elif 'type' in action.action_type:
-            #  id, name, xpath, link_text, partial_link_text, tag_name, class_name, css_selector
+        elif 'sendkeys' in action.action_type or 'send_keys' in action.action_type:
             if 'id' in action.action_selector_kind.lower():
                 driver.find_element_by_id(action.action_target).send_keys(action.type_text)
             elif 'name' in action.action_selector_kind.lower():
