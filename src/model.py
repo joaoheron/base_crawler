@@ -15,7 +15,6 @@ class BaseExtractor():
 
     def __init__(self, download_dir=vars.download_dir, browser='chrome'):
         self.download_dir = download_dir
-        self.base_timeout = base_timeout
         self.browser = browser
 
 # Base Requester

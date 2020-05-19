@@ -141,7 +141,11 @@ def navigate(driver):
         # Previous Window Action
         elif 'prevwindow' in action.action_type.lower() or 'prev_window' in action.action_type.lower() or 'previouswindows' in action.action_type.lower():
             window_prev = driver.window_handles[0]
-            driver.switch_to_window(window_after)
+            driver.switch_to_window(window_prev)
+        # Switch Window Action
+        elif 'switchwindow' in action.action_type.lower() or 'switch_window' in action.action_type.lower():
+            window_switch = driver.window_handles[int(action.action_target)]
+            driver.switch_to_window(window_switch)
         # New Tab Action
 
         # Switch Window Action
@@ -169,24 +173,24 @@ def navigate(driver):
         # Type actions
         elif 'sendkeys' in action.action_type or 'send_keys' in action.action_type:
             if 'id' in action.action_selector_kind.lower():
-                driver.find_element_by_id(action.action_target).send_keys(action.type_text)
+                driver.find_element_by_id(action.action_target).send_keys(action.keys)
             elif 'name' in action.action_selector_kind.lower():
-                driver.find_element_by_name(action.action_target).send_keys(action.type_text)
+                driver.find_element_by_name(action.action_target).send_keys(action.keys)
             elif 'xpath' in action.action_selector_kind.lower():
-                driver.find_element_by_xpath(action.action_target).send_keys(action.type_text)
+                driver.find_element_by_xpath(action.action_target).send_keys(action.keys)
             elif 'partial_link_text' in action.action_selector_kind.lower():
-                driver.find_element_by_partial_link_text(action.action_target).send_keys(action.type_text)
+                driver.find_element_by_partial_link_text(action.action_target).send_keys(action.keys)
             elif 'link_text' in action.action_selector_kind.lower():
-                driver.find_element_by_link_text(action.action_target).send_keys(action.type_text)
+                driver.find_element_by_link_text(action.action_target).send_keys(action.keys)
             elif 'tag_name' in action.action_selector_kind.lower():
-                driver.find_element_by_tag_name(action.action_target).send_keys(action.type_text)
+                driver.find_element_by_tag_name(action.action_target).send_keys(action.keys)
             elif 'class_name' in action.action_selector_kind.lower():
-                driver.find_element_by_class_name(action.action_target).send_keys(action.type_text)
+                driver.find_element_by_class_name(action.action_target).send_keys(action.keys)
             elif 'selector' in action.action_selector_kind.lower():
-                driver.find_element_by_css_selector(action.action_target).send_keys(action.type_text)
+                driver.find_element_by_css_selector(action.action_target).send_keys(action.keys)
         # Hover actions
         elif 'hover' in action.action_type:
-            action = ActionChains(driver)
+            actions_chains = ActionChains(driver)
             if 'id' in action.action_selector_kind.lower():
                 parent_level_menu = driver.find_element_by_id(action.action_target)
             elif 'name' in action.action_selector_kind.lower():
@@ -203,7 +207,7 @@ def navigate(driver):
                 parent_level_menu = driver.find_element_by_class_name(action.action_target)
             elif 'selector' in action.action_selector_kind.lower():
                 parent_level_menu = driver.find_element_by_css_selector(action.action_target)
-            action.move_to_element(parent_level_menu).perform()
+            actions_chains.move_to_element(parent_level_menu).perform()
         # Drag and drop actions
         elif 'drag_and_drop' in action.action_type:
             print('drag and dropped')
