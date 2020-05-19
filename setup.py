@@ -9,7 +9,7 @@ with open('README.rst') as readme_file:
 
 requirements = [
     'selenium==3.141.0',
-    'urllib3==1.25.9'
+    'urllib3==1.25.9',
 ]
 
 setup_requirements = []
