@@ -131,8 +131,17 @@ def navigate(driver):
         # Implicit Wait Action
         elif 'wait' in action.action_type.lower():
             driver.implicitly_wait(float(action.keys))
+        # Execute script
+        elif 'execute' in action.action_type.lower():
+            driver.execute_script(action.action_target)
         # New Window Action
-
+        elif 'newwindow' in action.action_type.lower() or 'new_window' in action.action_type.lower():
+            window_after = driver.window_handles[1]
+            driver.switch_to_window(window_after)
+        # Previous Window Action
+        elif 'prevwindow' in action.action_type.lower() or 'prev_window' in action.action_type.lower() or 'previouswindows' in action.action_type.lower():
+            window_prev = driver.window_handles[0]
+            driver.switch_to_window(window_after)
         # New Tab Action
 
         # Switch Window Action

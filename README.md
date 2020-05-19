@@ -8,9 +8,9 @@ This project can be configured at src/conf.py file. You can add as many actions 
 ### Running crawler
 This program supports 2 args: browser and timeout.
 
-browser means which navigator will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
+- browser means which navigator will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
 
-timeout is the amount of seconds the Selenium webdriver will use as it's own timeout.
+- timeout is the amount of seconds the Selenium webdriver will use as it's own timeout.
 
 ```bash
     python -m src.main browser timeout
