@@ -1,7 +1,10 @@
 from src.model import Action
 
 """ 
-actions_list is a list which stores as many Actions as you want.
+
+Every selenium function can be called by inserting an Action object inside an actions[] array.
+The array name must start with "actions_".
+
 Action is a object defined in the class model.py
     
 Action(action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)

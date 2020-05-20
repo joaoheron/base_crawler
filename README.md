@@ -5,13 +5,16 @@ Base crawler is an Python based tool which facilitates [Selenium Framework](http
 It enables the development of selenium based crawlers way faster.
 
 ### Understanding Base Crawler
+
 Base Crawler uses selenium to make navigation through websites easier as it gets.
 
 Many selenium functions and interactions are implemented by this application, and you can call them in a very easy way.
 
-Every selenium function can be called by inserting an Action object inside an actions[] array. Everything can be configured in the conf.py file. You can also find out examples of usage in the configuration file or in the section **Examples**
+Every selenium function can be called by inserting an Action object inside an actions[] array. 
+Everything can be configured in the conf.py file. You can also find out examples of usage in the configuration file or in the section **Examples**
 
 ### Getting started
+
 Be aware you must have a basic knowledge of Python and Selenium to understand how to use this application. 
 To configure your selenium navigation, follow the steps below:
 
@@ -22,7 +25,7 @@ To configure your selenium navigation, follow the steps below:
      
     `Action(action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)`
  
-    1. action_type:   
+    1. **action_type**:   
         1. goback: Clicks on the browser's GoBack action (Navigates to the previous link).
         2. gofoward: Clicks on the browser's GoFoward action (Navigates to the next link).
         3. navigation: Navigates to the action_target value.
@@ -32,11 +35,11 @@ To configure your selenium navigation, follow the steps below:
         7. hover: Hover over WebElement. 
         8. drag_and_drop: Drag and drops WebElement. 
 
-    2. action_target(optional): 
+    2. **action_target**(optional): 
         - action_target can be any url, element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
-            e.g.:  "button_id", "nth-child(3) > name", "Button Label"
+        - e.g.:  `"button_id"`, `"nth-child(3) > name"`, `"Button Label`
 
-    3. action_selector_kind(optional): 
+    3. **action_selector_kind**(optional): 
         - equivalement to driver.find_by_...() selenium's function.
         1. id: WebElement's id.
         2. name: WebElement's name.
@@ -47,11 +50,11 @@ To configure your selenium navigation, follow the steps below:
         7. class_name: WebElement's class name.
         8. css_selector: WebElement's css selector.
 
-    4. wait_for(optional): 
+    4. **wait_for**(optional): 
         - wait_for can be any element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
-            e.g.:  "button_id", "nth-child(3) > name", "Button Label
+        - e.g.:  `"button_id"`, `"nth-child(3) > name"`, `"Button Label`
 
-    5. wait_for_selector_kind(optional):
+    5. **wait_for_selector_kind**(optional):
         - equivalement to driver.find_by_...() selenium's function.
         1. id: WebElement's id.
         2. name: WebElement's name.
@@ -62,19 +65,26 @@ To configure your selenium navigation, follow the steps below:
         7. class_name: WebElement's class name.
         8. css_selector: WebElement's css selector.
 
-    6. keys(optional):
+    6. **keys**(optional):
         - keys is a paremeter which stores input keys for the Action. It can be use with send_keys action_type.
 
-    7. timeout(optional):
+    7. **timeout**(optional):
         - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout to throw an error.
 
 ### Examples 
 
 1. Example Crawler which navigates to Youtube and play a video.
-    - Edit your src/conf.py actions_play_youtube_video = []
+    - Edit your `src/conf.py` file, uncommenting the actions_play_youtube_video[] array.
+
+1. Example Crawler which navigates to Amazon and search for a product
+    - Edit your `src/conf.py` file, uncommenting the actions_search_prices_amazon[] array.
+
+1. Example Crawler which navigates to Facebook and logs in.
+    - Edit your `src/conf.py` file, uncommenting the actions_log_in_facebook[] array.
 
 ### Running Base Crawler
-This program supports 2 args: browser and timeout.
+
+This application supports 2 args: browser and timeout.
 
 - browser means which navigator will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
 
