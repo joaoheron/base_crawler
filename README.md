@@ -72,41 +72,31 @@ To configure your selenium navigation, follow the steps below:
         - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout to throw an error.
 
 ### Examples 
+To enable the project samples you must:
 
 1. Example Crawler which navigates to Youtube and play a video.
-    - Edit your `src/conf.py` file, uncommenting the actions_play_youtube_video[] array.
+    - Edit your `src/conf.py` file, uncommenting the array named actions_play_youtube_video[].
 
-1. Example Crawler which navigates to Amazon and search for a product
-    - Edit your `src/conf.py` file, uncommenting the actions_search_prices_amazon[] array.
+2. Example Crawler which navigates to Amazon and search for a product
+    - Edit your `src/conf.py` file, uncommenting the array named  actions_search_prices_amazon[].
 
-1. Example Crawler which navigates to Facebook and logs in.
-    - Edit your `src/conf.py` file, uncommenting the actions_log_in_facebook[] array.
+3. Example Crawler which navigates to Facebook and logs in.
+    - Edit your `src/conf.py` file, uncommenting the array named actions_log_in_facebook[].
 
 ### Running Base Crawler
+After configuring conf.py as suggested in the **Examples** section (Or created your own actions list, what we would appreciate), You must be aware:
 
-This application supports 2 args: browser and timeout.
+This application supports 3 arguments: browser, timeout and actions.
+1. browser means which navigator will be instantiatated by Selenium. 
+- e.g.: `chrome` for Google Chrome or `firefox` for Mozilla Firefox.
+2. timeout is the amount of seconds the Selenium webdriver will use as it's own timeout before throw an Exception because inactivity. 
+- e.g.: `30` for 30 seconds.
+3. actions is the full name of the array you want to execute (from `conf.py` file). 
+- e.g.: `actions_play_youtube_video`
 
-- browser means which navigator will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
-
-- timeout is the amount of seconds the Selenium webdriver will use as it's own timeout.
+You can easily run the application with the following command:
 
 ```bash
-    python -m src.main browser timeout
+    python -m src.main chrome 30 actions_play_youtube_video
 ```
-
-<!-- - navigation: Navigates to the action_target value.
-        - action_target e.g.: "https://www.github.com
-- download: Enables Webdriver download and navigates to the action_target value.
-        action_target e.g.: "https://www.github.com
-- click: Clicks on the WebElement. The WebElement is finded by action_target and action_selector_kind.
-        action_target: Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
-            e.g.:  "button_id", "nth-child(3) > name", "Button Label"
-- send_keys: Send keys(types) on the WebElement. The WebElement is finded by action_target and action_selector_kind.
-        action_target: Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
-            e.g.:  "button_id", "nth-child(3) > name", "Button Label"
-- hover: Hover over WebElement. The WebElement is finded by action_target and action_selector_kind.
-        action_target: Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
-            e.g.:  "button_id", "nth-child(3) > name", "Button Label"r"
-- drag_and_drop:Drag and drops WebElement. The WebElement is finded by action_target and action_selector_kind.
-        action_target: Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
-            e.g.:  "button_id", "nth-child(3) > name", "Button Label" -->
+For running the application with the example `actions_play_youtube_video` .
