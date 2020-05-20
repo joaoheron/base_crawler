@@ -146,6 +146,8 @@ def navigate(driver):
         elif 'switchwindow' in action.action_type.lower() or 'switch_window' in action.action_type.lower():
             window_switch = driver.window_handles[int(action.action_target)]
             driver.switch_to_window(window_switch)
+        # Scroll Action
+        
         # New Tab Action
 
         # Switch Window Action

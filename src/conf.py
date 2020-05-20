@@ -4,32 +4,24 @@ from src.model import Action
 actions_list is a list which stores as many Actions as you want.
 Action is a object defined in the class model.py
     
-Action(action_type, action_target, action_selector_kind, wait_for, wait_for_kind, keys, timeout)
+Action(action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)
 
     action_type:   
         - goback: Clicks on the browser's GoBack action (Navigates to the previous link).
         - gofoward: Clicks on the browser's GoFoward action (Navigates to the next link).
         - navigation: Navigates to the action_target value.
-                - Allowed action_target: Any url.
         - download: Enables Webdriver download and navigates to the action_target value.
-                - Allowed action_target:  Any url.
-        - click: Clicks on the WebElement. The WebElement is finded by action_target and action_selector_kind.
-                - Allowed action_target: : Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
-                - Allowed action_selector_kind: "id", "name", "xpath", "link_text", "partial_link_text", "tag_name", "class_name" or "css_selector"
-        - send_keys: Send keys(types) on the WebElement. The WebElement is finded by action_target and action_selector_kind.
-                - Allowed action_target: : Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
-                - Allowed action_selector_kind: "id", "name", "xpath", "link_text", "partial_link_text", "tag_name", "class_name" or "css_selector"
-        - hover: Hover over WebElement. The WebElement is finded by action_target and action_selector_kind.
-                - Allowed action_target: : Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
-                - Allowed action_selector_kind: "id", "name", "xpath", "link_text", "partial_link_text", "tag_name", "class_name" or "css_selector"
-        - drag_and_drop:Drag and drops WebElement. The WebElement is finded by action_target and action_selector_kind.
-                - Allowed action_target: : Any id, name, xpath, link_text, partial_link_text, tag_name, class_name or css_selector.
-                - Allowed action_selector_kind: "id", "name", "xpath", "link_text", "partial_link_text", "tag_name", "class_name" or "css_selector"
+        - click: Clicks on the WebElement. 
+        - send_keys: Send keys(types) on the WebElement. 
+        - hover: Hover over WebElement. 
+        - drag_and_drop: Drag and drops WebElement. 
 
     action_target: 
-        action_target can be any url, element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
+        - action_target can be any url, element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
+            e.g.:  "button_id", "nth-child(3) > name", "Button Label"
 
-    action_selector_kind:
+    action_selector_kind: 
+        equivalement to driver.find_by_...() selenium's function.
         - id: WebElement's id.
         - name: WebElement's name.
         - xpath: WebElement's xpath.
@@ -40,29 +32,37 @@ Action(action_type, action_target, action_selector_kind, wait_for, wait_for_kind
         - css_selector: WebElement's css selector.
 
     wait_for: 
-        wait_for can be any element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
+        - wait_for can be any element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
+            e.g.:  "button_id", "nth-child(3) > name", "Button Label
 
-    wait_for_kind:
-        - id: Element's id.
-        - name: Element's name.
-        - xpath: Element's xpath.
-        - link_text: Element's link text.
-        - partial_link_text: Element's partial link text.
-        - tag_name: Element's tag name.
-        - class_name: Element's class name.
-        - css_selector: Element's css selector.
+    wait_for_selector_kind:
+        equivalement to driver.find_by_...() selenium's function.
+        - id: WebElement's id.
+        - name: WebElement's name.
+        - xpath: WebElement's xpath.
+        - link_text: WebElement's link text.
+        - partial_link_text: WebElement's partial link text.
+        - tag_name: WebElement's tag name.
+        - class_name: WebElement's class name.
+        - css_selector: WebElement's css selector.
 
     keys:
-        Keys is a paremeter which stores input keys for the Action. It can be with send_keys action type.
+        - keys is a paremeter which stores input keys for the Action. It can be use with send_keys action_type.
 
     timeout:
-        Timeout is the amount of seconds the Selenium webdriver will use as it's own timeout.
+        - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout to throw an error.
 """
-# Action(action_type, action_target, action_selector_kind, wait_for, wait_for_kind, keys, timeout)
 
-actions_list = [
-    Action('navigation', 'https://essentia-app.indicium.tech/dashapp/'),
-    Action('sendkeys', 'email', 'id', keys='emailcadastrado'),
-    Action('sendkeys', 'password', 'id', keys='senhacadastrada'),
-    Action('click', '/html/body/div[1]/div/div/div/div/div/div[2]/div/form/button', 'xpath'),
-]
+# Example Crawler which navigates to Youtube and play a video.
+actions_play_youtube_video = []
+
+# Example Crawler which navigates to Amazon and search for a product.
+actions_search_prices_amazon = []
+
+# Example Crawler which navigates to Facebook and logs in.
+actions_log_in_facebook = []
+
+# Action('navigation', 'https://essentia-app.indicium.tech/dashapp/'),
+# Action('sendkeys', 'email', 'id', keys='emailcadastrado'),
+# Action('sendkeys', 'password', 'id', keys='senhacadastrada'),
+# Action('click', '/html/body/div[1]/div/div/div/div/div/div[2]/div/form/button', 'xpath'),
