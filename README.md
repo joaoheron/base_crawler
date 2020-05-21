@@ -37,7 +37,7 @@ To configure your selenium navigation, follow the steps below:
 
     2. **action_target**(optional): 
         - action_target can be any url, element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
-        - e.g.:  `"button_id"`, `"nth-child(3) > name"`, `"Button Label`
+        - e.g.:  `"button_id"`, `"nth-child(3) > name"`, `"Button Label"`
 
     3. **action_selector_kind**(optional): 
         - equivalement to driver.find_by_...() selenium's function.
@@ -52,7 +52,7 @@ To configure your selenium navigation, follow the steps below:
 
     4. **wait_for**(optional): 
         - wait_for can be any element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
-        - e.g.:  `"button_id"`, `"nth-child(3) > name"`, `"Button Label`
+        - e.g.:  `"button_id"`, `"nth-child(3) > name"`, `"Button Label"`
 
     5. **wait_for_selector_kind**(optional):
         - equivalement to driver.find_by_...() selenium's function.
@@ -86,13 +86,13 @@ To enable the project samples you must:
 ### Running Base Crawler
 After configuring conf.py as suggested in the **Examples** section (Or created your own actions list, what we would appreciate), You must be aware:
 
-This application supports 3 arguments: browser, timeout and actions.
+- This application supports 3 arguments: browser, timeout and actions.
 1. browser means which navigator will be instantiatated by Selenium. 
-- e.g.: `chrome` for Google Chrome or `firefox` for Mozilla Firefox.
-2. timeout is the amount of seconds the Selenium webdriver will use as it's own timeout before throw an Exception because inactivity. 
-- e.g.: `30` for 30 seconds.
+    - e.g.: `chrome` for Google Chrome or `firefox` for Mozilla Firefox.
+2. timeout is the amount of seconds the Selenium webdriver will use as it's own timeout before throw an Exception due inactivity. 
+    - e.g.: `30` for 30 seconds.
 3. actions is the full name of the array you want to execute (from `conf.py` file). 
-- e.g.: `actions_play_youtube_video`
+    - e.g.: `actions_play_youtube_video`
 
 You can easily run the application with the following command:
 

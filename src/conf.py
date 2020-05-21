@@ -7,7 +7,9 @@ The array name must start with "actions_".
 
 Action is a object defined in the class model.py
     
-Action(action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)
+Action(description, action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)
+
+    description:
 
     action_type:   
         - goback: Clicks on the browser's GoBack action (Navigates to the previous link).

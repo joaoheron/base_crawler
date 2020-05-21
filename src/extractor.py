@@ -1,5 +1,6 @@
 import time
 import os
+import conf
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
@@ -56,7 +57,7 @@ def build_firefox_options():
     """
     print('build options for Gecko Driver is not available yet.')
 
-def extract(browser, timeout):
+def extract(browser, timeout, actions):
     """ 
     function extract()
         This function builds a selenium webdriver and navigates through websites.
@@ -65,8 +66,16 @@ def extract(browser, timeout):
         - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
         - timeout: Amount of seconds the Selenium webdriver will use as it's own timeout.
     """
+    verify_conf(actions)
     driver = build_driver(browser, timeout)
     navigate(driver)
+
+def verify_conf(actions):
+    try:
+        actions_input_arg = str(actions)
+        actions_from_conf
+    except:
+        raise
 
 def build_driver(browser='chrome', timeout=30):
     """ 

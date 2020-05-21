@@ -47,6 +47,7 @@ class Action():
                 - keys - Allowed inputs: any string
                 - timeout - Allowed inputs: any float
     """
+    description = None
     action_type = None
     action_target = None
     action_selector_kind = None
@@ -55,7 +56,8 @@ class Action():
     keys = None
     timeout = None
 
-    def __init__(self, action_type=None, action_target=None, action_selector_kind=None, wait_for=None, wait_for_selector_kind=None, keys=None, timeout=30):
+    def __init__(self, description=None, action_type=None, action_target=None, action_selector_kind=None, wait_for=None, wait_for_selector_kind=None, keys=None, timeout=30):
+        self.description = description
         self.action_type = action_type
         self.action_target = action_target
         self.action_selector_kind = action_selector_kind
@@ -63,3 +65,16 @@ class Action():
         self.wait_for_selector_kind = wait_for_selector_kind
         self.keys = keys
         self.timeout = timeout
+
+class ActionsBuilder():
+    """ 
+    class BaseRequester
+
+    This class defines a Http Requester.
+
+    Attributes: - actions: arrays of arrays of Action() objects - Allowed inputs: any string path
+    """
+    actions = None
+    
+    def __init__(self, actions=vars.actions):
+        self.actions = actions
