@@ -1,7 +1,6 @@
 from src.model import Action
 
 """ 
-
 Every selenium function can be called by inserting an Action object inside an actions[] array.
 The array name must start with "actions_".
 
@@ -16,7 +15,7 @@ Action(description, action_type, action_target, action_selector_kind, wait_for, 
         - gofoward: Clicks on the browser's GoFoward action (Navigates to the next link).
         - navigation: Navigates to the action_target value.
         - download: Enables Webdriver download and navigates to the action_target value.
-        - click: Clicks on the WebElement. 
+        - click: Clicks on the WebElement.
         - send_keys: Send keys(types) on the WebElement. 
         - hover: Hover over WebElement. 
         - drag_and_drop: Drag and drops WebElement. 
@@ -58,21 +57,20 @@ Action(description, action_type, action_target, action_selector_kind, wait_for, 
         - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout to throw an error.
 """
 
-# Example Crawler which navigates to Youtube and play a video.
+# Example Crawler which navigates to Amazon and search for a product
 actions_list = [
-    Action('navigation', 'https://www.youtube.com/watch?v=EiIHHiJdVo8'), # Navigates to your favorite video
-    Action('w8', 30), # Waits for 30 seconds
-    Action('click', 'ytp-ad-skip-button ytp-button', 'class_name'), # Clicks on the skip ad button
-    Action('w8', 40), # Waits for 40 seconds
+    # Navigates to your favorite video
+    Action('navigation', 'https://www.amazon.com/'),
+    # Waits for 10 seconds
+    Action('wait', 10),
+    # Clicks on the search box
+    Action('click', 'twotabsearchtextbox', 'id'),
+    # Sends "roly-poly toy" keys to search box
+    Action('send_keys', 'twotabsearchtextbox', 'id', keys='roly-poly toy'),
+    # Clicks on the Search button
+    Action('click', '#nav-search > form > div.nav-right', 'selector'),
+    # Waits for 10 seconds
+    Action('wait', 10),
+    # Clicks on the first item of the products list
+    Action('click', '//*[@id="search"]/div[1]/div[2]/div/span[4]/div[2]/div[3]/div/span/div/div/span/a/div', 'xpath')
 ]
-
-# # Example Crawler which navigates to Amazon and search for a product.
-# actions_list = []
-
-# # Example Crawler which navigates to Facebook and logs in.
-# actions_list = []
-
-# Action('navigation', 'https://essentia-app.indicium.tech/dashapp/'),
-# Action('sendkeys', 'email', 'id', keys='emailcadastrado'),
-# Action('sendkeys', 'password', 'id', keys='senhacadastrada'),
-# Action('click', '/html/body/div[1]/div/div/div/div/div/div[2]/div/form/button', 'xpath'),

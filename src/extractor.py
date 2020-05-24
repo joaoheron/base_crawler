@@ -141,10 +141,6 @@ def navigate(driver):
                 driver.execute_script("window.history.go(+1)")
             # Implicit Wait Action
             elif 'wait' in action.action_type.lower() or 'w8' in action.action_type.lower():
-                # if action.action_target is not None:
-                #     driver.implicitly_wait(float(action.action_target))
-                # else:
-                # driver.implicitly_wait(30)
                 time.sleep(int(action.action_target))
             # Wait for element
 
@@ -234,4 +230,5 @@ def navigate(driver):
             driver.close()
             raise
     print('Actions successfully executed. Closing browser and exiting crawler...')
+    time.sleep(10)
     driver.close()
