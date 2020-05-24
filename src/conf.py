@@ -59,13 +59,18 @@ Action(description, action_type, action_target, action_selector_kind, wait_for, 
 """
 
 # Example Crawler which navigates to Youtube and play a video.
-actions_play_youtube_video = []
+actions_list = [
+    Action('navigation', 'https://www.youtube.com/watch?v=EiIHHiJdVo8'), # Navigates to your favorite video
+    Action('w8', 30), # Waits for 30 seconds
+    Action('click', 'ytp-ad-skip-button ytp-button', 'class_name'), # Clicks on the skip ad button
+    Action('w8', 40), # Waits for 40 seconds
+]
 
-# Example Crawler which navigates to Amazon and search for a product.
-actions_search_prices_amazon = []
+# # Example Crawler which navigates to Amazon and search for a product.
+# actions_list = []
 
-# Example Crawler which navigates to Facebook and logs in.
-actions_log_in_facebook = []
+# # Example Crawler which navigates to Facebook and logs in.
+# actions_list = []
 
 # Action('navigation', 'https://essentia-app.indicium.tech/dashapp/'),
 # Action('sendkeys', 'email', 'id', keys='emailcadastrado'),

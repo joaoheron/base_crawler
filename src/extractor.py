@@ -1,6 +1,5 @@
 import time
 import os
-import conf
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
@@ -57,7 +56,7 @@ def build_firefox_options():
     """
     print('build options for Gecko Driver is not available yet.')
 
-def extract(browser, timeout, actions):
+def extract(browser, timeout):
     """ 
     function extract()
         This function builds a selenium webdriver and navigates through websites.
@@ -66,14 +65,15 @@ def extract(browser, timeout, actions):
         - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
         - timeout: Amount of seconds the Selenium webdriver will use as it's own timeout.
     """
-    verify_conf(actions)
+    verify_conf()
     driver = build_driver(browser, timeout)
     navigate(driver)
 
-def verify_conf(actions):
+def verify_conf():
+    # TODO Fazer um método de verificação
     try:
-        actions_input_arg = str(actions)
-        actions_from_conf
+        for action in actions_list:
+            print('Action ' + str(action) + ' verified.')
     except:
         raise
 
@@ -123,102 +123,115 @@ def navigate(driver):
     Attributes: 
         - driver: Selenium web driver.
     """
+
     for action in actions_list:
-        # Navigation Action
-        if 'navigation' in action.action_type.lower() or 'navigate' in action.action_type.lower():
-            driver.get(action.action_target)
-        # Download Action
-        elif 'download' in action.action_type.lower():
-            enable_download_headless(driver, vars.download_dir)
-            driver.get(action.action_target)
-        # Goback Action
-        elif 'goback' in action.action_type.lower():
-            driver.execute_script("window.history.go(-1)")
-        # Goforward Action
-        elif 'goforward' in action.action_type.lower():
-            driver.execute_script("window.history.go(+1)")
-        # Implicit Wait Action
-        elif 'wait' in action.action_type.lower():
-            driver.implicitly_wait(float(action.keys))
-        # Execute script
-        elif 'execute' in action.action_type.lower():
-            driver.execute_script(action.action_target)
-        # New Window Action
-        elif 'newwindow' in action.action_type.lower() or 'new_window' in action.action_type.lower():
-            window_after = driver.window_handles[1]
-            driver.switch_to_window(window_after)
-        # Previous Window Action
-        elif 'prevwindow' in action.action_type.lower() or 'prev_window' in action.action_type.lower() or 'previouswindows' in action.action_type.lower():
-            window_prev = driver.window_handles[0]
-            driver.switch_to_window(window_prev)
-        # Switch Window Action
-        elif 'switchwindow' in action.action_type.lower() or 'switch_window' in action.action_type.lower():
-            window_switch = driver.window_handles[int(action.action_target)]
-            driver.switch_to_window(window_switch)
-        # Scroll Action
-        
-        # New Tab Action
+        try:
+            # Navigation Action
+            if 'navigation' in action.action_type.lower() or 'navigate' in action.action_type.lower():
+                driver.get(action.action_target)
+            # Download Action
+            elif 'download' in action.action_type.lower():
+                enable_download_headless(driver, vars.download_dir)
+                driver.get(action.action_target)
+            # Goback Action
+            elif 'goback' in action.action_type.lower():
+                driver.execute_script("window.history.go(-1)")
+            # Goforward Action
+            elif 'goforward' in action.action_type.lower():
+                driver.execute_script("window.history.go(+1)")
+            # Implicit Wait Action
+            elif 'wait' in action.action_type.lower() or 'w8' in action.action_type.lower():
+                # if action.action_target is not None:
+                #     driver.implicitly_wait(float(action.action_target))
+                # else:
+                # driver.implicitly_wait(30)
+                time.sleep(int(action.action_target))
+            # Wait for element
 
-        # Switch Window Action
+            # Execute script
+            elif 'execute' in action.action_type.lower():
+                driver.execute_script(action.action_target)
+            # New Window Action
+            elif 'newwindow' in action.action_type.lower() or 'new_window' in action.action_type.lower():
+                window_after = driver.window_handles[1]
+                driver.switch_to_window(window_after)
+            # Previous Window Action
+            elif 'prevwindow' in action.action_type.lower() or 'prev_window' in action.action_type.lower() or 'previouswindows' in action.action_type.lower():
+                window_prev = driver.window_handles[0]
+                driver.switch_to_window(window_prev)
+            # Switch Window Action
+            elif 'switchwindow' in action.action_type.lower() or 'switch_window' in action.action_type.lower():
+                window_switch = driver.window_handles[int(action.action_target)]
+                driver.switch_to_window(window_switch)
+            # Scroll Action
+            
+            # New Tab Action
 
-        # Switch Tab Action
+            # Switch Window Action
 
-        # Click actions
-        elif 'click' in action.action_type.lower():
-            if 'id' in action.action_selector_kind.lower():
-                driver.find_element_by_id(action.action_target).click()
-            elif 'name' in action.action_selector_kind.lower():
-                driver.find_element_by_name(action.action_target).click()
-            elif 'xpath' in action.action_selector_kind.lower():
-                driver.find_element_by_xpath(action.action_target).click()
-            elif 'partial_link_text' in action.action_selector_kind.lower():
-                driver.find_element_by_partial_link_text(action.action_target).click()
-            elif 'link_text' in action.action_selector_kind.lower():
-                driver.find_element_by_link_text(action.action_target).click()
-            elif 'tag_name' in action.action_selector_kind.lower():
-                driver.find_element_by_tag_name(action.action_target).click()
-            elif 'class_name' in action.action_selector_kind.lower():
-                driver.find_element_by_class_name(action.action_target).click()
-            elif 'selector' in action.action_selector_kind.lower():
-                driver.find_element_by_css_selector(action.action_target).click()
-        # Type actions
-        elif 'sendkeys' in action.action_type or 'send_keys' in action.action_type:
-            if 'id' in action.action_selector_kind.lower():
-                driver.find_element_by_id(action.action_target).send_keys(action.keys)
-            elif 'name' in action.action_selector_kind.lower():
-                driver.find_element_by_name(action.action_target).send_keys(action.keys)
-            elif 'xpath' in action.action_selector_kind.lower():
-                driver.find_element_by_xpath(action.action_target).send_keys(action.keys)
-            elif 'partial_link_text' in action.action_selector_kind.lower():
-                driver.find_element_by_partial_link_text(action.action_target).send_keys(action.keys)
-            elif 'link_text' in action.action_selector_kind.lower():
-                driver.find_element_by_link_text(action.action_target).send_keys(action.keys)
-            elif 'tag_name' in action.action_selector_kind.lower():
-                driver.find_element_by_tag_name(action.action_target).send_keys(action.keys)
-            elif 'class_name' in action.action_selector_kind.lower():
-                driver.find_element_by_class_name(action.action_target).send_keys(action.keys)
-            elif 'selector' in action.action_selector_kind.lower():
-                driver.find_element_by_css_selector(action.action_target).send_keys(action.keys)
-        # Hover actions
-        elif 'hover' in action.action_type:
-            actions_chains = ActionChains(driver)
-            if 'id' in action.action_selector_kind.lower():
-                parent_level_menu = driver.find_element_by_id(action.action_target)
-            elif 'name' in action.action_selector_kind.lower():
-                parent_level_menu = driver.find_element_by_name(action.action_target)
-            elif 'xpath' in action.action_selector_kind.lower():
-                parent_level_menu = driver.find_element_by_xpath(action.action_target)
-            elif 'partial_link_text' in action.action_selector_kind.lower():
-                parent_level_menu = driver.find_element_by_partial_link_text(action.action_target)
-            elif 'link_text' in action.action_selector_kind.lower():
-                parent_level_menu = driver.find_element_by_link_text(action.action_target)
-            elif 'tag_name' in action.action_selector_kind.lower():
-                parent_level_menu = driver.find_element_by_tag_name(action.action_target)
-            elif 'class_name' in action.action_selector_kind.lower():
-                parent_level_menu = driver.find_element_by_class_name(action.action_target)
-            elif 'selector' in action.action_selector_kind.lower():
-                parent_level_menu = driver.find_element_by_css_selector(action.action_target)
-            actions_chains.move_to_element(parent_level_menu).perform()
-        # Drag and drop actions
-        elif 'drag_and_drop' in action.action_type:
-            print('drag and dropped')
+            # Switch Tab Action
+
+            # Click actions
+            elif 'click' in action.action_type.lower():
+                if 'id' in action.action_selector_kind.lower():
+                    driver.find_element_by_id(action.action_target).click()
+                elif 'name' in action.action_selector_kind.lower():
+                    driver.find_element_by_name(action.action_target).click()
+                elif 'xpath' in action.action_selector_kind.lower():
+                    driver.find_element_by_xpath(action.action_target).click()
+                elif 'partial_link_text' in action.action_selector_kind.lower():
+                    driver.find_element_by_partial_link_text(action.action_target).click()
+                elif 'link_text' in action.action_selector_kind.lower():
+                    driver.find_element_by_link_text(action.action_target).click()
+                elif 'tag_name' in action.action_selector_kind.lower():
+                    driver.find_element_by_tag_name(action.action_target).click()
+                elif 'class_name' in action.action_selector_kind.lower():
+                    driver.find_element_by_class_name(action.action_target).click()
+                elif 'selector' in action.action_selector_kind.lower():
+                    driver.find_element_by_css_selector(action.action_target).click()
+            # Type actions
+            elif 'sendkeys' in action.action_type or 'send_keys' in action.action_type:
+                if 'id' in action.action_selector_kind.lower():
+                    driver.find_element_by_id(action.action_target).send_keys(action.keys)
+                elif 'name' in action.action_selector_kind.lower():
+                    driver.find_element_by_name(action.action_target).send_keys(action.keys)
+                elif 'xpath' in action.action_selector_kind.lower():
+                    driver.find_element_by_xpath(action.action_target).send_keys(action.keys)
+                elif 'partial_link_text' in action.action_selector_kind.lower():
+                    driver.find_element_by_partial_link_text(action.action_target).send_keys(action.keys)
+                elif 'link_text' in action.action_selector_kind.lower():
+                    driver.find_element_by_link_text(action.action_target).send_keys(action.keys)
+                elif 'tag_name' in action.action_selector_kind.lower():
+                    driver.find_element_by_tag_name(action.action_target).send_keys(action.keys)
+                elif 'class_name' in action.action_selector_kind.lower():
+                    driver.find_element_by_class_name(action.action_target).send_keys(action.keys)
+                elif 'selector' in action.action_selector_kind.lower():
+                    driver.find_element_by_css_selector(action.action_target).send_keys(action.keys)
+            # Hover actions
+            elif 'hover' in action.action_type:
+                actions_chains = ActionChains(driver)
+                if 'id' in action.action_selector_kind.lower():
+                    parent_level_menu = driver.find_element_by_id(action.action_target)
+                elif 'name' in action.action_selector_kind.lower():
+                    parent_level_menu = driver.find_element_by_name(action.action_target)
+                elif 'xpath' in action.action_selector_kind.lower():
+                    parent_level_menu = driver.find_element_by_xpath(action.action_target)
+                elif 'partial_link_text' in action.action_selector_kind.lower():
+                    parent_level_menu = driver.find_element_by_partial_link_text(action.action_target)
+                elif 'link_text' in action.action_selector_kind.lower():
+                    parent_level_menu = driver.find_element_by_link_text(action.action_target)
+                elif 'tag_name' in action.action_selector_kind.lower():
+                    parent_level_menu = driver.find_element_by_tag_name(action.action_target)
+                elif 'class_name' in action.action_selector_kind.lower():
+                    parent_level_menu = driver.find_element_by_class_name(action.action_target)
+                elif 'selector' in action.action_selector_kind.lower():
+                    parent_level_menu = driver.find_element_by_css_selector(action.action_target)
+                actions_chains.move_to_element(parent_level_menu).perform()
+            # Drag and drop actions
+            elif 'drag_and_drop' in action.action_type:
+                print('drag and dropped')
+        except:
+            driver.close()
+            raise
+    print('Actions successfully executed. Closing browser and exiting crawler...')
+    driver.close()

@@ -70,19 +70,22 @@
 
 # Action(action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)
 
-crawler:
-  actions:
-    name: actions_play_youtube_video
-    action:
-      description: Navigate to youtube
-      action_type: navigation
-      action_target: https://www.youtube.com
-    action:
-      description: Click Search Bar
-      action_type: click
-      action_target: search
-      action_selector_kind: id
-
+# crawler:
+#   actions:
+#     name: actions_play_youtube_video
+#     action:
+#       description: Navigate to youtube
+#       action_type: navigation
+#       action_target: https://www.youtube.com
+#     action:
+#       description: Click Search Bar
+#       action_type: click
+#       action_target: search
+#       action_selector_kind: id
+#     action:
+#       description: Type Something
+#       action_type: send_keys
+#       keys: funny video
   # actions:
   #   name: actions_search_prices_amazon
   #   action:
