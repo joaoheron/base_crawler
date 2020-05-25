@@ -101,4 +101,3 @@ You can easily run the application with the following command:
 ```bash
     python -m src.main chrome 30
 ```
-For running the application with the example actions_list from `conf.py` .

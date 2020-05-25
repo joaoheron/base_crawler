@@ -42,7 +42,7 @@ setup(
     long_description=readme,
     include_package_data=True,
     package_dir={'base_crawler': 'base_crawler'},
-    package_data={'base_crawler': ['assets/*', 'assets/*/*', 'assets/*/*/*', 'assets/*/*/*/*', 'assets/*/*/*/*/*']},
+    package_data={'base_crawler': ['res/assets/*', 'res/assets/*/*', 'res/assets/*/*/*', 'res/assets/*/*/*/*', 'res/assets/*/*/*/*/*']},
     keywords='base_crawler',
     name='base_crawler',
     packages=find_packages(include=['base_crawler', 'base_crawler.*']),
