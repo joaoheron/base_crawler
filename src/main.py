@@ -8,7 +8,6 @@ if len(sys.argv) < 3:
     sys.exit(1)
 elif len(sys.argv) == 3:
     extractor.extract(sys.argv[1], sys.argv[2])
-#  python -m src.main chrome 30 actions_play_youtube_video
 else:
     print('Unsupported args.')
     sys.exit(1)

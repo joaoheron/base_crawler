@@ -19,9 +19,9 @@ Be aware you must have a basic knowledge of Python and Selenium to understand ho
 To configure your selenium navigation, follow the steps below:
 
 1. Open src/conf.py file.
-2. Add as many arrays as you want, every one of them must start its name by "actions_". e.g.: actions_find_some_product.
+2. Configure actions_list variable as you like, by adding as many Actions() as you want. 
 
-    - Inside every array, you must insert an Action() with the following parameters:
+    - Action() object can have the following parameters:
      
     `Action(action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)`
  
@@ -72,31 +72,33 @@ To configure your selenium navigation, follow the steps below:
         - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout to throw an error.
 
 ### Examples 
-To enable the project samples you must:
+The project's default example is already enabled on `conf.py ` file. To set your own configurations, change the Actions() called inside the array named actions_list. 
 
-1. Example Crawler which navigates to Youtube and play a video.
-    - Edit your `src/conf.py` file, uncommenting the array named actions_play_youtube_video[].
-
-2. Example Crawler which navigates to Amazon and search for a product
-    - Edit your `src/conf.py` file, uncommenting the array named  actions_search_prices_amazon[].
-
-3. Example Crawler which navigates to Facebook and logs in.
-    - Edit your `src/conf.py` file, uncommenting the array named actions_log_in_facebook[].
+1. Example Crawler which navigates to Amazon, searches for products named "roly-poly toy" and clicks on the first item displayed:
+```bash
+actions_list = [
+    Action('navigation', 'https://www.amazon.com/'),
+    Action('wait', 5),
+    Action('click', 'twotabsearchtextbox', 'id'),
+    Action('send_keys', 'twotabsearchtextbox', 'id', keys='roly-poly toy'),
+    Action('click', '#nav-search > form > div.nav-right', 'selector'),
+    Action('wait', 5),
+    Action('click', '//*[@id="search"]/div[1]/div[2]/div/span[4]/div[2]/div[3]/div/span/div/div/span/a/div', 'xpath')
+]
+```
 
 ### Running Base Crawler
-After configuring conf.py as suggested in the **Examples** section (Or created your own actions list, what we would appreciate), You must be aware:
+After configuring `conf.py` the way you like, as suggested on the **Examples** section, you must be aware:
 
-- This application supports 3 arguments: browser, timeout and actions.
+- This application supports 2 arguments: browser and timeout.
 1. browser means which navigator will be instantiatated by Selenium. 
     - e.g.: `chrome` for Google Chrome or `firefox` for Mozilla Firefox.
 2. timeout is the amount of seconds the Selenium webdriver will use as it's own timeout before throw an Exception due inactivity. 
     - e.g.: `30` for 30 seconds.
-3. actions is the full name of the array you want to execute (from `conf.py` file). 
-    - e.g.: `actions_play_youtube_video`
 
 You can easily run the application with the following command:
 
 ```bash
-    python -m src.main chrome 30 actions_play_youtube_video
+    python -m src.main chrome 30
 ```
-For running the application with the example `actions_play_youtube_video` .
+For running the application with the example actions_list from `conf.py` .

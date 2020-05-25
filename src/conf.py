@@ -61,16 +61,16 @@ Action(description, action_type, action_target, action_selector_kind, wait_for, 
 actions_list = [
     # Navigates to your favorite video
     Action('navigation', 'https://www.amazon.com/'),
-    # Waits for 10 seconds
-    Action('wait', 10),
+    # Waits for 5 seconds
+    Action('wait', 5),
     # Clicks on the search box
     Action('click', 'twotabsearchtextbox', 'id'),
     # Sends "roly-poly toy" keys to search box
     Action('send_keys', 'twotabsearchtextbox', 'id', keys='roly-poly toy'),
     # Clicks on the Search button
     Action('click', '#nav-search > form > div.nav-right', 'selector'),
-    # Waits for 10 seconds
-    Action('wait', 10),
+    # Waits for 5 seconds
+    Action('wait', 5),
     # Clicks on the first item of the products list
     Action('click', '//*[@id="search"]/div[1]/div[2]/div/span[4]/div[2]/div[3]/div/span/div/div/span/a/div', 'xpath')
 ]
