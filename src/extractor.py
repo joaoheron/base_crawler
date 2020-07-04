@@ -45,7 +45,7 @@ def build_chrome_options(headless=True):
     })
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--disable-software-rasterizer')
-    # chrome_options.add_argument('--headless=' + str(headless))
+    chrome_options.add_argument('--headless=' + str(headless))
 
     return chrome_options
 
@@ -92,7 +92,7 @@ def build_driver(browser='chrome', timeout=30):
     print('Building Driver...')
     if 'chrome' in browser.lower() or 'google' in browser.lower():
         # build options
-        chrome_options = build_chrome_options()
+        chrome_options = build_chrome_options(False)
         # initialize webdriver
         driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=vars.chromedriver_path)
         # maximize window
@@ -127,12 +127,24 @@ def return_by(string_by):
     """
     if string_by == 'id':
         return By.ID
+    elif string_by == 'name':
+        return By.NAME
     elif string_by == 'xpath':
         return By.XPATH
+    elif string_by == 'link_text':
+        return By.LINK_TEXT
+    elif string_by == 'partial_link_text':
+        return By.PARTIAL_LINK_TEXT
+    elif string_by == 'tag_name':
+        return By.TAG_NAME
+    elif string_by == 'class_name':
+        return By.CLASS_NAME
+    elif string_by == 'css_selector':
+        return By.CSS_SELECTOR
 
-def wait4(driver, action):
+def waitfor(driver, action):
     """ 
-    method wait4()
+    method waitfor()
         This method navigates through websites executing every Action inside actions_list (from conf.py file).
 
     Attributes: 
@@ -141,12 +153,9 @@ def wait4(driver, action):
     """
     # Wait for element
     if action.wait_for and action.wait_for_selector_kind:
-        wait = WebDriverWait(driver)
+        wait = WebDriverWait(driver, action.timeout)
         element = wait.until(ec.visibility_of_element_located((return_by(action.wait_for_selector_kind), action.wait_for)))
         # ActionChains(driver).move_to_element(element).perform()
-
-    # Action(description, action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)
-
 
 def navigate(driver):
     """ 
@@ -158,7 +167,8 @@ def navigate(driver):
     """
     for action in actions_list:
         try:
-            wait4(driver, action)
+        # Action(description, action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)
+            waitfor(driver, action)
             # Navigation Action
             if 'navigation' in action.action_type.lower() or 'navigate' in action.action_type.lower():
                 driver.get(action.action_target)
@@ -190,14 +200,12 @@ def navigate(driver):
             elif 'switchwindow' in action.action_type.lower() or 'switch_window' in action.action_type.lower():
                 window_switch = driver.window_handles[int(action.action_target)]
                 driver.switch_to_window(window_switch)
-            # Scroll Action
-            
-            # New Tab Action
-
-            # Switch Window Action
-
-            # Switch Tab Action
-
+            # Scroll Actions
+            elif 'scroll' in action.action_type.lower() and action.action_target:
+                driver.execute_script(str(action.action_target)f"window.scrollTo(%s,document.body.scrollHeight)")
+            # Scroll Actions
+            elif 'scrolldown' in action.action_type.lower() or 'scroll_down' in action.action_type.lower() or 'scroll_bottom' in action.action_type.lower():
+                driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
             # Click actions
             elif 'click' in action.action_type.lower():
                 if 'id' in action.action_selector_kind.lower():
@@ -254,12 +262,10 @@ def navigate(driver):
                 elif 'selector' in action.action_selector_kind.lower():
                     parent_level_menu = driver.find_element_by_css_selector(action.action_target)
                 actions_chains.move_to_element(parent_level_menu).perform()
-            # Drag and drop actions
-            elif 'drag_and_drop' in action.action_type:
-                print('drag and dropped')
         except:
             driver.close()
             raise
+        finally:
+            driver.close()
     print('Actions successfully executed. Closing browser and exiting crawler...')
-    time.sleep(10)
-    driver.close()
+    time.sleep(5)
