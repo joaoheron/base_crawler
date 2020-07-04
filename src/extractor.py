@@ -92,7 +92,7 @@ def build_driver(browser='chrome', timeout=30):
     print('Building Driver...')
     if 'chrome' in browser.lower() or 'google' in browser.lower():
         # build options
-        chrome_options = build_chrome_options(False)
+        chrome_options = build_chrome_options()
         # initialize webdriver
         driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=vars.chromedriver_path)
         # maximize window
@@ -202,7 +202,7 @@ def navigate(driver):
                 driver.switch_to_window(window_switch)
             # Scroll Actions
             elif 'scroll' in action.action_type.lower() and action.action_target:
-                driver.execute_script(str(action.action_target)f"window.scrollTo(%s,document.body.scrollHeight)")
+                driver.execute_script("window.scrollTo(" + str(action_target) + ",document.body.scrollHeight)")
             # Scroll Actions
             elif 'scrolldown' in action.action_type.lower() or 'scroll_down' in action.action_type.lower() or 'scroll_bottom' in action.action_type.lower():
                 driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
@@ -265,7 +265,5 @@ def navigate(driver):
         except:
             driver.close()
             raise
-        finally:
-            driver.close()
     print('Actions successfully executed. Closing browser and exiting crawler...')
     time.sleep(5)
