@@ -3,14 +3,17 @@ import os
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 from src.model import Action
 from src.conf import actions_list
 import src.vars as vars
 
 def enable_download_headless(browser, download_dir):
     """ 
-    function enable_download_headless()
-        This function enables that a webdriver download files even if it's a headless webdriver.
+    method enable_download_headless()
+        This method enables that a webdriver download files even if it's a headless webdriver.
 
     Attributes: 
         - browser: Selenium web driver.
@@ -22,8 +25,8 @@ def enable_download_headless(browser, download_dir):
 
 def build_chrome_options(headless=True):
     """ 
-    function build_chrome_options()
-        This function builds options for Chrome Driver.
+    method build_chrome_options()
+        This method builds options for Chrome Driver.
 
     Attributes: 
         - headless: Indicates if the driver will be headless (hidden).
@@ -48,8 +51,8 @@ def build_chrome_options(headless=True):
 
 def build_firefox_options():
     """ 
-    function build_firefox_options()
-        This function builds options for Gecko Driver.
+    method build_firefox_options()
+        This method builds options for Gecko Driver.
 
     Attributes: 
             - headless: Indicates if the driver will be headless (hidden).
@@ -58,8 +61,8 @@ def build_firefox_options():
 
 def extract(browser, timeout):
     """ 
-    function extract()
-        This function builds a selenium webdriver and navigates through websites.
+    method extract()
+        This method builds a selenium webdriver and navigates through websites.
 
     Attributes: 
         - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
@@ -79,8 +82,8 @@ def verify_conf():
 
 def build_driver(browser='chrome', timeout=30):
     """ 
-    function build_driver()
-        This function builds a selenium webdriver.
+    method build_driver()
+        This method builds a selenium webdriver.
 
     Attributes: 
         - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
@@ -101,8 +104,8 @@ def build_driver(browser='chrome', timeout=30):
         
 def screenshot(driver, download_dir=vars.download_dir, filename=vars.filename, fileformat=None):
     """ 
-    function screenshot()
-        This function takes a Screenshot from the screen.
+    method screenshot()
+        This method takes a Screenshot from the screen.
 
     Attributes: 
         - driver: Selenium web driver.
@@ -115,17 +118,47 @@ def screenshot(driver, download_dir=vars.download_dir, filename=vars.filename, f
     driver.save_screenshot(download_dir + filename)
     print('Screenshoted screen and saved file at ' + str(download_dir))
 
+def return_by(string_by):
+    """ 
+    method return_by()
+
+    Attributes: 
+        - return_by: Selenium web driver.
+    """
+    if string_by == 'id':
+        return By.ID
+    elif string_by == 'xpath':
+        return By.XPATH
+
+def wait4(driver, action):
+    """ 
+    method wait4()
+        This method navigates through websites executing every Action inside actions_list (from conf.py file).
+
+    Attributes: 
+        - driver: Selenium web driver.
+        - action: Webdriver action object
+    """
+    # Wait for element
+    if action.wait_for and action.wait_for_selector_kind:
+        wait = WebDriverWait(driver)
+        element = wait.until(ec.visibility_of_element_located((return_by(action.wait_for_selector_kind), action.wait_for)))
+        # ActionChains(driver).move_to_element(element).perform()
+
+    # Action(description, action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)
+
+
 def navigate(driver):
     """ 
-    function navigate()
-        This function navigates through websites executing every Action inside actions_list (from conf.py file).
+    method navigate()
+        This method navigates through websites executing every Action inside actions_list (from conf.py file).
 
     Attributes: 
         - driver: Selenium web driver.
     """
-
     for action in actions_list:
         try:
+            wait4(driver, action)
             # Navigation Action
             if 'navigation' in action.action_type.lower() or 'navigate' in action.action_type.lower():
                 driver.get(action.action_target)
@@ -142,8 +175,6 @@ def navigate(driver):
             # Implicit Wait Action
             elif 'wait' in action.action_type.lower() or 'w8' in action.action_type.lower():
                 time.sleep(int(action.action_target))
-            # Wait for element
-
             # Execute script
             elif 'execute' in action.action_type.lower():
                 driver.execute_script(action.action_target)
