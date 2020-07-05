@@ -5,9 +5,9 @@ name: Python package
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master , develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ master , develop ]
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.6, 3.7, 3.8]
 
     steps:
     - uses: actions/checkout@v2
@@ -34,12 +34,12 @@ jobs:
       run: |
         ls -la
         pwd
-        
-        # chmod a+x deploy_scripts/linter.sh
-        # sh deploy_scripts/linter.sh
-        # flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        # flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        cd ~
+        ls -la
+        pwd
+        python /home/runner/work/base_crawler/base_crawler/deploy/build_linter_profile.py
+        cd /home/runner/work/base_crawler/base_crawler
+        flake8 src/ tests/ deploy/
     - name: Test with pytest
       run: |
         pytest

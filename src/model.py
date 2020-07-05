@@ -2,7 +2,7 @@ import src.vars as vars
 
 # Base Extractor
 class BaseExtractor():
-    """ 
+    """
     class BaseExtractor
 
     This class defines a Selenium Extractor.
@@ -19,7 +19,7 @@ class BaseExtractor():
 
 # Base Requester
 class BaseRequester():
-    """ 
+    """
     class BaseRequester
 
     This class defines a Http Requester.
@@ -27,14 +27,13 @@ class BaseRequester():
     Attributes: - download_dir - Allowed inputs: any string path
     """
     download_dir = None
-    
+
     def __init__(self, download_dir=vars.download_dir):
         self.download_dir = download_dir
 
 # Action
 class Action():
-
-    """ 
+    """
     class Action
 
     This class defines a webdriver action.

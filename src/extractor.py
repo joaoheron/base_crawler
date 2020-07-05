@@ -3,16 +3,19 @@ import os
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
-from src.model import Action
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
+# from src.model import Action
 from src.conf import actions_list
 import src.vars as vars
 
 def enable_download_headless(browser, download_dir):
-    """ 
-    function enable_download_headless()
-        This function enables that a webdriver download files even if it's a headless webdriver.
+    """
+    method enable_download_headless()
+        This method enables that a webdriver download files even if it's a headless webdriver.
 
-    Attributes: 
+    Attributes:
         - browser: Selenium web driver.
         - download_dir: Folder to store the downloads.
     """
@@ -21,11 +24,11 @@ def enable_download_headless(browser, download_dir):
     browser.execute("send_command", params)
 
 def build_chrome_options(headless=True):
-    """ 
-    function build_chrome_options()
-        This function builds options for Chrome Driver.
+    """
+    method build_chrome_options()
+        This method builds options for Chrome Driver.
 
-    Attributes: 
+    Attributes:
         - headless: Indicates if the driver will be headless (hidden).
     """
     chrome_options = Options()
@@ -42,26 +45,26 @@ def build_chrome_options(headless=True):
     })
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--disable-software-rasterizer')
-    # chrome_options.add_argument('--headless=' + str(headless))
+    chrome_options.add_argument('--headless=' + str(headless))
 
     return chrome_options
 
 def build_firefox_options():
-    """ 
-    function build_firefox_options()
-        This function builds options for Gecko Driver.
+    """
+    method build_firefox_options()
+        This method builds options for Gecko Driver.
 
-    Attributes: 
+    Attributes:
             - headless: Indicates if the driver will be headless (hidden).
     """
     print('build options for Gecko Driver is not available yet.')
 
 def extract(browser, timeout):
-    """ 
-    function extract()
-        This function builds a selenium webdriver and navigates through websites.
+    """
+    method extract()
+        This method builds a selenium webdriver and navigates through websites.
 
-    Attributes: 
+    Attributes:
         - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
         - timeout: Amount of seconds the Selenium webdriver will use as it's own timeout.
     """
@@ -70,19 +73,18 @@ def extract(browser, timeout):
     navigate(driver)
 
 def verify_conf():
-    # TODO Fazer um método de verificação
     try:
         for action in actions_list:
             print('Action ' + str(action) + ' verified.')
-    except:
-        raise
+    except Exception as ex:
+        raise ex
 
 def build_driver(browser='chrome', timeout=30):
-    """ 
-    function build_driver()
-        This function builds a selenium webdriver.
+    """
+    method build_driver()
+        This method builds a selenium webdriver.
 
-    Attributes: 
+    Attributes:
         - browser: Which browser will be instantiatated by Selenium (Google Chrome or Mozilla Firefox).
         - timeout: Amount of seconds the Selenium webdriver will use as it's own timeout.
     """
@@ -98,13 +100,13 @@ def build_driver(browser='chrome', timeout=30):
         return driver
     elif 'firefox' in browser.lower() or 'gecko' in browser.lower() or 'mozilla' in browser.lower():
         print('Gecko Driver is not available yet.')
-        
-def screenshot(driver, download_dir=vars.download_dir, filename=vars.filename, fileformat=None):
-    """ 
-    function screenshot()
-        This function takes a Screenshot from the screen.
 
-    Attributes: 
+def screenshot(driver, download_dir=vars.download_dir, filename=vars.filename, fileformat=None):
+    """
+    method screenshot()
+        This method takes a Screenshot from the screen.
+
+    Attributes:
         - driver: Selenium web driver.
         - download_dir: Folder to store screenshot file.
         - filename: Screenshot's file name.
@@ -115,17 +117,57 @@ def screenshot(driver, download_dir=vars.download_dir, filename=vars.filename, f
     driver.save_screenshot(download_dir + filename)
     print('Screenshoted screen and saved file at ' + str(download_dir))
 
-def navigate(driver):
-    """ 
-    function navigate()
-        This function navigates through websites executing every Action inside actions_list (from conf.py file).
+def return_by(string_by):
+    """
+    method return_by()
 
-    Attributes: 
+    Attributes:
+        - return_by: Selenium web driver.
+    """
+    if string_by == 'id':
+        return By.ID
+    elif string_by == 'name':
+        return By.NAME
+    elif string_by == 'xpath':
+        return By.XPATH
+    elif string_by == 'link_text':
+        return By.LINK_TEXT
+    elif string_by == 'partial_link_text':
+        return By.PARTIAL_LINK_TEXT
+    elif string_by == 'tag_name':
+        return By.TAG_NAME
+    elif string_by == 'class_name':
+        return By.CLASS_NAME
+    elif string_by == 'css_selector':
+        return By.CSS_SELECTOR
+
+def waitfor(driver, action):
+    """
+    method waitfor()
+        This method navigates through websites executing every Action inside actions_list (from conf.py file).
+
+    Attributes:
+        - driver: Selenium web driver.
+        - action: Webdriver action object
+    """
+    # Wait for element
+    if action.wait_for and action.wait_for_selector_kind:
+        wait = WebDriverWait(driver, action.timeout)
+        element = wait.until(ec.visibility_of_element_located((return_by(action.wait_for_selector_kind), action.wait_for)))
+        ActionChains(driver).move_to_element(element).perform()
+
+def navigate(driver):
+    """
+    method navigate()
+        This method navigates through websites executing every Action inside actions_list (from conf.py file).
+
+    Attributes:
         - driver: Selenium web driver.
     """
-
     for action in actions_list:
+        # Action(description, action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)
         try:
+            waitfor(driver, action)
             # Navigation Action
             if 'navigation' in action.action_type.lower() or 'navigate' in action.action_type.lower():
                 driver.get(action.action_target)
@@ -142,8 +184,6 @@ def navigate(driver):
             # Implicit Wait Action
             elif 'wait' in action.action_type.lower() or 'w8' in action.action_type.lower():
                 time.sleep(int(action.action_target))
-            # Wait for element
-
             # Execute script
             elif 'execute' in action.action_type.lower():
                 driver.execute_script(action.action_target)
@@ -159,14 +199,12 @@ def navigate(driver):
             elif 'switchwindow' in action.action_type.lower() or 'switch_window' in action.action_type.lower():
                 window_switch = driver.window_handles[int(action.action_target)]
                 driver.switch_to_window(window_switch)
-            # Scroll Action
-            
-            # New Tab Action
-
-            # Switch Window Action
-
-            # Switch Tab Action
-
+            # Scroll Actions
+            elif 'scroll' in action.action_type.lower() and action.action_target:
+                driver.execute_script("window.scrollTo(" + str(action.action_target) + ",document.body.scrollHeight)")
+            # Scroll Actions
+            elif 'scrolldown' in action.action_type.lower() or 'scroll_down' in action.action_type.lower() or 'scroll_bottom' in action.action_type.lower():
+                driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
             # Click actions
             elif 'click' in action.action_type.lower():
                 if 'id' in action.action_selector_kind.lower():
@@ -223,12 +261,8 @@ def navigate(driver):
                 elif 'selector' in action.action_selector_kind.lower():
                     parent_level_menu = driver.find_element_by_css_selector(action.action_target)
                 actions_chains.move_to_element(parent_level_menu).perform()
-            # Drag and drop actions
-            elif 'drag_and_drop' in action.action_type:
-                print('drag and dropped')
-        except:
+        except Exception as ex:
             driver.close()
-            raise
+            raise ex
     print('Actions successfully executed. Closing browser and exiting crawler...')
-    time.sleep(10)
-    driver.close()
+    time.sleep(5)
