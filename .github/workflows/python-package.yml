@@ -37,7 +37,6 @@ jobs:
         cd ~
         ls -la
         pwd
-        mkdir .config
         cd /home/runner/work/base_crawler/base_crawler
         python deploy/build_linter_profile.py
         flake8 src/ tests/ deploy/
