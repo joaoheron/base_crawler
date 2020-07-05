@@ -28,9 +28,10 @@ help:
 
 # Analyze code style with flake8
 lint:
-	pip install flake8
-	chmod a+x /deploy/linter.sh
-	sh /deploy/linter.sh
+	cd ~
+	python /home/runner/work/base_crawler/base_crawler/deploy/build_linter_profile.py
+	cd /home/runner/work/base_crawler/base_crawler
+	flake8 src/ tests/ deploy/
 
 # Run all application tests ()
 unittest:

@@ -34,7 +34,7 @@ setup(
     description="Base crawler is an Python based tool which facilitates Selenium Framework usage",
     entry_points={
         'console_scripts': [
-            'crawler=base_crawler.cli:cli',
+            'extract=src.cli:cli',
         ],
     },
     install_requires=requirements,

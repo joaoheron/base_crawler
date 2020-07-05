@@ -69,7 +69,7 @@ To configure your selenium navigation, follow the steps below:
         - keys is a paremeter which stores input keys for the Action. It can be use with send_keys action_type.
 
     7. **timeout**(optional):
-        - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout to throw an error.
+        - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout before throw an error.
 
 ### Examples 
 The project's default example is already enabled on `conf.py ` file. To set your own configurations, change the Actions() called inside the array named actions_list. 

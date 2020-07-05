@@ -35,8 +35,6 @@ jobs:
         ls -la
         pwd
         cd ~
-        ls -la
-        pwd
         python /home/runner/work/base_crawler/base_crawler/deploy/build_linter_profile.py
         cd /home/runner/work/base_crawler/base_crawler
         flake8 src/ tests/ deploy/

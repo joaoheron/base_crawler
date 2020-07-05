@@ -54,7 +54,7 @@ Action(description, action_type, action_target, action_selector_kind, wait_for, 
         - keys is a paremeter which stores input keys for the Action. It can be use with send_keys action_type.
 
     timeout:
-        - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout to throw an error.
+        - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout.
 """
 
 # Example Crawler which navigates to Amazon and search for a product
