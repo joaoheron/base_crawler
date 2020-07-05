@@ -5,11 +5,11 @@ mkdir .config
 pwd
 ls -la
 
-python ../opt/atlassian/pipelines/agent/build/deploy_scripts/build_linter_profile.py
-cd ../opt/atlassian/pipelines/agent/build
+python ../home/runner/work/base_crawler/base_crawler/deploy/build_linter_profile.py
+cd ../home/runner/work/base_crawler/base_crawler
 
 # Type which folders you would like do test with flake8
-flake8 app/ tests/ deploy/
+flake8 src/ tests/ deploy/
 
 if [ $? -eq 1 ]
 then
