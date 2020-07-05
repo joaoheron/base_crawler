@@ -29,8 +29,8 @@ help:
 # Analyze code style with flake8
 lint:
 	pip install flake8
-	chmod a+x ./deploy_scripts/linter.sh
-	./deploy_scripts/linter.sh
+	chmod a+x /deploy/linter.sh
+	sh /deploy/linter.sh
 
 # Run all application tests ()
 unittest:
