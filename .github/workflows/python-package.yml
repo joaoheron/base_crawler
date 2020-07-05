@@ -34,6 +34,7 @@ jobs:
       run: |
         ls -la
         pwd
+        mkdir .config
         python deploy/build_linter_profile.py
         flake8 app/ tests/ deploy/
     - name: Test with pytest
