@@ -1,7 +1,5 @@
 import sys
 import src.extractor as extractor
-import src.vars as vars
-import time
 
 if len(sys.argv) < 3:
     print('This program allows the following args: \nbrowser, timeout')

@@ -1,30 +1,30 @@
 from src.model import Action
 
-""" 
+"""
 Every selenium function can be called by inserting an Action object inside an actions[] array.
 The array name must start with "actions_".
 
 Action is a object defined in the class model.py
-    
+
 Action(description, action_type, action_target, action_selector_kind, wait_for, wait_for_selector_kind, keys, timeout)
 
     description:
 
-    action_type:   
+    action_type:
         - goback: Clicks on the browser's GoBack action (Navigates to the previous link).
         - gofoward: Clicks on the browser's GoFoward action (Navigates to the next link).
         - navigation: Navigates to the action_target value.
         - download: Enables Webdriver download and navigates to the action_target value.
         - click: Clicks on the WebElement.
-        - send_keys: Send keys(types) on the WebElement. 
-        - hover: Hover over WebElement. 
-        - drag_and_drop: Drag and drops WebElement. 
+        - send_keys: Send keys(types) on the WebElement.
+        - hover: Hover over WebElement.
+        - drag_and_drop: Drag and drops WebElement.
 
-    action_target: 
+    action_target:
         - action_target can be any url, element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
             e.g.:  "button_id", "nth-child(3) > name", "Button Label"
 
-    action_selector_kind: 
+    action_selector_kind:
         equivalement to driver.find_by_...() selenium's function.
         - id: WebElement's id.
         - name: WebElement's name.
@@ -35,7 +35,7 @@ Action(description, action_type, action_target, action_selector_kind, wait_for, 
         - class_name: WebElement's class name.
         - css_selector: WebElement's css selector.
 
-    wait_for: 
+    wait_for:
         - wait_for can be any element's id, element's selector, element's xpath, element's link or partial link text, element's class or tag name.
             e.g.:  "button_id", "nth-child(3) > name", "Button Label
 
