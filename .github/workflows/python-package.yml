@@ -37,8 +37,8 @@ jobs:
         cd ~
         ls -la
         pwd
+        python /home/runner/work/base_crawler/base_crawler/deploy/build_linter_profile.py
         cd /home/runner/work/base_crawler/base_crawler
-        python deploy/build_linter_profile.py
         flake8 src/ tests/ deploy/
     - name: Test with pytest
       run: |
