@@ -3,39 +3,17 @@ import click
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-""" Console script for extendable_base_dash.
+""" Console script for Base Crawler.
 
 Commands:
-  create-user  Creates an user.
-  delete-db    Deletes the database for user management.
-  init-app     Clones repository and inits it.
-  init-db      Creates the user database for user management.
-  run-app      Run the web application.
+    base  Run base crawler.
 
-ebd init-app: Clones repository and inits it.
+crawler base: Clones repository and inits it.
     Options:
-    -url, --path-url TEXT  URL to repository
+    -a, --actions TEXT  path to repository
+    -b, --browser TEXT actions file path. default: src/conf.py
+    -t, --timeout NUMBER amount of seconds the Webdriver will use as it's own timeout before throw an error
 
-ebd init-db: Creates the user database for user management.
-    Options: -
-
-ebd delete-db: Deletes the database for user management
-    Options:
-    -p, --port TEXT       Port to connect with the database that will be deleted.
-    -db, --dbname TEXT    Name of the database that will be deleted.
-    -user, --dbuser TEXT  User to connect with the database that will be deleted.
-    -pw, --password TEXT  Password to connect with the database that will be deleted.
-
-ebd create-user: Creates an user.
-    Options:
-    --email TEXT     User's email.
-    --name TEXT      User's first name.
-    --lastname TEXT  User's last name.
-    --password TEXT  User's password.
-    -a, --is_admin   Flag to indicate this user is an admin.
-
-ebd run-app: Run the web application.
-    Options: -
 """
 
 TYPE_HELP = "Type 'ebd %s --help' to display cli options."
