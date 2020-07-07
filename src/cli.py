@@ -1,6 +1,7 @@
 import os
 import click
 import psycopg2
+import src.extractor as extractor
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 """ Console script for Base Crawler.
@@ -16,7 +17,7 @@ crawler base: Clones repository and inits it.
 
 """
 
-TYPE_HELP = "Type 'ebd %s --help' to display cli options."
+TYPE_HELP = "Type 'crawler %s --help' to display cli options."
 USERS_DATABASE_URL = str(os.environ.get('USERS_DATABASE_URL'))
 
 @click.group()
@@ -29,27 +30,14 @@ def cli():
 @click.option("--timeout", '-t', default="30", help="Amount of seconds the Webdriver will use as it's own timeout before throw an error.")
 # @click.option('--is_admin', '-a', is_flag=True, help="Flag to indicate this user is an admin.")
 def base(actions, browser, timeout):
-    """ Creates an user. """
-    app = create_app()
-
+    """ Run base crawler """
     with app.app_context():
         try:
-            user.name = name
-            user.surname = lastname
-
-            if is_admin:
-                admin = Admin()
-                admin.user = user
-                db.session.add(admin)
-                print("Admin User created.")
-            else:
-                print("User created.")
-
-            db.session.commit()
+            extractor.extract(browser, timeout)
             return True
         except Exception as e:
-            print('Failed to create user. ' + str(e))
-            print(TYPE_HELP % ('create-user'))
+            print('Failed to run base crawler. ' + str(e))
+            print(TYPE_HELP % ('base'))
             return False
 
 if __name__ == "__main__":
