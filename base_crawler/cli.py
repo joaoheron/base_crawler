@@ -1,9 +1,7 @@
 import os
 import click
-import psycopg2
 import src.extractor as extractor
 from src import extractor
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 """ Console script for Base Crawler.
 
@@ -43,3 +41,5 @@ def base(actions, browser, timeout):
 
 if __name__ == "__main__":
     cli()
+# if __name__ == "__main__":
+#     sys.exit(main())  # pragma: no cover

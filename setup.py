@@ -7,23 +7,23 @@ from setuptools import setup, find_packages
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
-requirements = [
-    'selenium==3.141.0',
-    'urllib3==1.25.9',
-]
+with open('HISTORY.rst') as history_file:
+    history = history_file.read()
 
-setup_requirements = []
+requirements = ['Click>=7.0', 'selenium==3.141.0']
 
-test_requirements = []
+setup_requirements = ['pytest-runner', ]
+
+test_requirements = ['pytest>=3', ]
 
 setup(
-    author="joao heron",
+    author="Joao Heron",
     author_email='joao.heron@indicium.tech',
     python_requires='>=3.5',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: Apache Software License',
+        'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
@@ -31,18 +31,16 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="Base crawler is an Python based tool which facilitates Selenium Framework usage",
+    description="Base crawler is a Python based tool which facilitates Selenium Framework usage. ",
     entry_points={
         'console_scripts': [
-            'crawler=src.cli:cli',
+            'base_crawler=base_crawler.cli:main',
         ],
     },
     install_requires=requirements,
-    license="Apache Software License 2.0",
-    long_description=readme,
+    license="MIT license",
+    long_description=readme + '\n\n' + history,
     include_package_data=True,
-    package_dir={'base_crawler': 'base_crawler'},
-    package_data={'base_crawler': ['res/assets/*', 'res/assets/*/*', 'res/assets/*/*/*', 'res/assets/*/*/*/*', 'res/assets/*/*/*/*/*']},
     keywords='base_crawler',
     name='base_crawler',
     packages=find_packages(include=['base_crawler', 'base_crawler.*']),
@@ -50,6 +48,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/joaoheron/base_crawler',
-    version='0.0.1',
+    version='0.1.0',
     zip_safe=False,
 )
