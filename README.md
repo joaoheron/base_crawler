@@ -1,6 +1,4 @@
-============
-Base Crawler
-============
+# Base Crawler
 ![Base Crawler](/res/assets/logo.png "Base Crawler is your anytime crawler buddy.")
 
 Base crawler is an Python based tool which facilitates [Selenium Framework](https://github.com/SeleniumHQ/selenium "Selenium HQ Github project.") usage.
