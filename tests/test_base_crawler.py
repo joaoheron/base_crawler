@@ -3,11 +3,10 @@
 """Tests for `base_crawler` package."""
 
 import pytest
-
 from click.testing import CliRunner
-
-from base_crawler import base_crawler
 from base_crawler import cli
+
+# from base_crawler import base_crawler
 
 
 @pytest.fixture
