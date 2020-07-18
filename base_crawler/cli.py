@@ -39,7 +39,12 @@ def base(actions, browser, timeout):
             print(TYPE_HELP % ('base'))
             return False
 
+@click.command()
+def main(args=None):
+    """Console script for base_crawler."""
+    click.echo("base_crawler.cli.main")
+    return 0
+
 if __name__ == "__main__":
-    cli()
-# if __name__ == "__main__":
-#     sys.exit(main())  # pragma: no cover
+    # cli()
+    sys.exit(main())  # pragma: no cover
