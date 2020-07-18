@@ -21,7 +21,7 @@ Everything can be configured in the conf.py file. You can also find out examples
 Be aware you must have a basic knowledge of Python and Selenium to understand how to use this application. 
 To configure your selenium navigation, follow the steps below:
 
-1. Open src/conf.py file.
+1. Open base_crawler/conf.py file.
 2. Configure actions_list variable as you like, by adding as many Actions() as you want. 
 
     - Action() object can have the following parameters:
@@ -102,5 +102,5 @@ After configuring `conf.py` the way you like, as suggested on the **Examples** s
 You can easily run the application with the following command:
 
 ```bash
-    python -m src.main chrome 30
+    python -m base_crawler.main chrome 30
 ```

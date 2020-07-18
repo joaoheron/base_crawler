@@ -1,4 +1,4 @@
-import src.vars as vars
+import base_crawler.vars as vars
 
 # Base Extractor
 class BaseExtractor():

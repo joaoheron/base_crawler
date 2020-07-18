@@ -1,5 +1,6 @@
+"""Main module."""
 import sys
-import src.extractor as extractor
+import base_crawler.extractor as extractor
 
 if len(sys.argv) < 3:
     print('This program allows the following args: \nbrowser, timeout')

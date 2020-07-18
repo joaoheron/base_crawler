@@ -9,7 +9,7 @@ python ../home/runner/work/base_crawler/base_crawler/deploy/build_linter_profile
 cd ../home/runner/work/base_crawler/base_crawler
 
 # Type which folders you would like do test with flake8
-flake8 src/ tests/ deploy/
+flake8 base_crawler/ tests/ deploy/
 
 if [ $? -eq 1 ]
 then

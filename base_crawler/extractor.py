@@ -6,9 +6,9 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-# from src.model import Action
-from src.conf import actions_list
-import src.vars as vars
+# from base_crawler.model import Action
+from base_crawler.conf import actions_list
+import base_crawler.vars as vars
 
 def enable_download_headless(browser, download_dir):
     """
@@ -45,7 +45,7 @@ def build_chrome_options(headless=True):
     })
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--disable-software-rasterizer')
-    chrome_options.add_argument('--headless=' + str(headless))
+    # chrome_options.add_argument('--headless=' + str(headless))
 
     return chrome_options
 
@@ -265,4 +265,4 @@ def navigate(driver):
             driver.close()
             raise ex
     print('Actions successfully executed. Closing browser and exiting crawler...')
-    time.sleep(5)
+    time.sleep(15)

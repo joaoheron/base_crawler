@@ -1,4 +1,4 @@
-from src.model import Action
+from base_crawler.model import Action
 
 """
 Every selenium function can be called by inserting an Action object inside an actions[] array.
@@ -57,20 +57,24 @@ Action(description, action_type, action_target, action_selector_kind, wait_for, 
         - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout.
 """
 
-# Example Crawler which navigates to Amazon and search for a product
+# Example Crawler which navigates to Indicium Tech website
 actions_list = [
     # Navigates to your favorite video
-    Action('navigation', 'https://www.amazon.com/'),
+    Action('navigation', 'https://indicium.tech/'),
     # Waits for 5 seconds
     Action('wait', 5),
-    # Clicks on the search box
-    Action('click', 'twotabsearchtextbox', 'id'),
-    # Sends "roly-poly toy" keys to search box
-    Action('send_keys', 'twotabsearchtextbox', 'id', keys='roly-poly toy'),
-    # Clicks on the Search button
-    Action('click', '#nav-search > form > div.nav-right', 'selector'),
-    # Waits for 5 seconds
-    Action('wait', 5),
-    # Clicks on the first item of the products list
-    Action('click', '//*[@id="search"]/div[1]/div[2]/div/span[4]/div[2]/div[3]/div/span/div/div/span/a/div', 'xpath')
+    # Clicks on Explore button
+    Action('click', 'Explorar', 'partial_link_text'),
+    
+
+    # # Clicks on the search box
+    # Action('click', 'twotabsearchtextbox', 'id'),
+    # # Sends "roly-poly toy" keys to search box
+    # Action('send_keys', 'twotabsearchtextbox', 'id', keys='roly-poly toy'),
+    # # Clicks on the Search button
+    # Action('click', '#nav-search > form > div.nav-right', 'selector'),
+    # # Waits for 5 seconds
+    # Action('wait', 5),
+    # # Clicks on the first item of the products list
+    # Action('click', '//*[@id="search"]/div[1]/div[2]/div/span[4]/div[2]/div[3]/div/span/div/div/span/a/div', 'xpath')
 ]
