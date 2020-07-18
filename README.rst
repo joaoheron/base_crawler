@@ -4,6 +4,9 @@
 Base crawler is an Python based tool which facilitates [Selenium Framework](https://github.com/SeleniumHQ/selenium "Selenium HQ Github project.") usage.
 It enables the development of selenium based crawlers way faster.
 
+* Free software: MIT license
+* Documentation: https://base-crawler.readthedocs.io.
+
 ### Understanding Base Crawler
 
 Base Crawler uses selenium to make navigation through websites easier as it gets.
@@ -69,7 +72,7 @@ To configure your selenium navigation, follow the steps below:
         - keys is a paremeter which stores input keys for the Action. It can be use with send_keys action_type.
 
     7. **timeout**(optional):
-        - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout to throw an error.
+        - timeout is the amount of seconds the Selenium webdriver will use as it's own timeout before throw an Exception due inactivity.
 
 ### Examples 
 The project's default example is already enabled on `conf.py ` file. To set your own configurations, change the Actions() called inside the array named actions_list. 
