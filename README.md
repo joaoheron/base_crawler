@@ -1,11 +1,10 @@
 # Base Crawler
 ![Base Crawler](/res/assets/logo.png "Base Crawler is your anytime crawler buddy.")
 
-Base crawler is an Python based tool which facilitates [Selenium Framework](https://github.com/SeleniumHQ/selenium "Selenium HQ Github project.") usage.
+Base crawler is a Python based tool which facilitates [Selenium Framework](https://github.com/SeleniumHQ/selenium "Selenium HQ Github project.") usage.
 It enables the development of selenium based crawlers way faster.
 
 * Free software: MIT license
-* Documentation: https://base-crawler.readthedocs.io.
 
 ### Understanding Base Crawler
 
